@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const auth_1 = __importDefault(require("../vaildator/auth"));
+const auth_2 = __importDefault(require("../controllers/auth"));
+const verifyJWT_1 = __importDefault(require("../middleware/verifyJWT"));
+const router = express_1.default.Router();
+router.post('/changePassword', auth_1.default.ChangePassword, verifyJWT_1.default, auth_2.default.changePassword);
+router.post('/changePhoto', verifyJWT_1.default, auth_2.default.changePhoto);
+router.post('/setPrivacy', auth_1.default.setPrivacy, verifyJWT_1.default, auth_2.default.setPrivacy);
+router.get('/getPrivateData', verifyJWT_1.default, auth_2.default.getPrivateData);
+router.post('/setGeneralSettings', auth_1.default.setGeneralSettings, verifyJWT_1.default, auth_2.default.setGeneralSettings);
+router.post('/sendForgetPassword', auth_1.default.sendForgetPassword, auth_2.default.sendForgetPaswword);
+router.post('/logout', verifyJWT_1.default, auth_2.default.logout);
+router.post('/login', auth_1.default.login, auth_2.default.login);
+router.post('/registration', auth_1.default.registration, auth_2.default.registration);
+router.get('/refresh', auth_2.default.refresh);
+router.get('/forgetPassword/:id/:token', auth_2.default.forgetPassword);
+router.post('/forgetPassword/:id/:token', auth_1.default.restPassword, auth_2.default.restPassword);
+exports.default = router;

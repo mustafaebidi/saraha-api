@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const verifyJWT_1 = __importDefault(require("../middleware/verifyJWT"));
+const massage_1 = __importDefault(require("../controllers/massage"));
+const massage_2 = __importDefault(require("../vaildator/massage"));
+const router = express_1.default.Router();
+router.get('/getAll', verifyJWT_1.default, massage_1.default.getLengthOfmassages);
+router.get('/getAll/:skip', verifyJWT_1.default, massage_1.default.getAllMassage);
+router.get('/:id', massage_2.default.checkExsitUser, massage_1.default.checkExsitUser);
+router.post('/setStatus/:id', massage_2.default.setStatus, verifyJWT_1.default, massage_1.default.setStatusOfMassage);
+router.post('/:id', massage_2.default.createMassage, massage_1.default.createMassage);
+router.delete('/:id', massage_2.default.deleteMassage, verifyJWT_1.default, massage_1.default.deleteMassage);
+router.patch('/toggleFavoure/:id', massage_2.default.toggleFavoure, verifyJWT_1.default, massage_1.default.toggleFavorite);
+router.get('/opinionsAllowed/:id', massage_2.default.getOpinionsAllowed, massage_1.default.getOpinionsAllowed);
+router.post('/addReply/:id', massage_2.default.addReply, verifyJWT_1.default, massage_1.default.addReply);
+exports.default = router;
